@@ -1,0 +1,19 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Sammobadi",
+  "url": "https://example.com",
+  "logo": "/favicon_192.png",
+  "sameAs": [
+    "https://twitter.com/your_twitter",
+    "https://www.linkedin.com/in/your_profile"
+  ],
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": "+880000000000",
+      "contactType": "customer service",
+      "areaServed": "BD"
+    }
+  ]
+}
