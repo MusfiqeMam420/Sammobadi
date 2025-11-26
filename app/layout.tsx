@@ -10,13 +10,13 @@ const schemaData = {
   "url": "https://sammobadi.com/",
   "logo": "https://sammobadi.com/favicon/favicon_192.png",
   "sameAs": [
-    "https://twitter.com/YOUR_USERNAME",
-    "https://www.linkedin.com/in/YOUR_USERNAME/"
+    "https://x.com/sammobadi",
+    // "https://www.linkedin.com/in/YOUR_USERNAME/"
   ],
   "contactPoint": [
     {
       "@type": "ContactPoint",
-      "telephone": "+880000000000",
+      "telephone": "+8801622244057",
       "contactType": "customer support"
     }
   ]
@@ -24,9 +24,19 @@ const schemaData = {
 
 export const metadata: Metadata = {
   title: "Sammobadi",
-  description:
-    "Crafting digital experiences that move people and inspire connection between ideas and emotion.",
-
+   description:
+    "Sammobadi is a creative digital agency specializing in UI/UX design, website development, branding, animation, graphics design, and video editing services. We build fast, modern, and user-focused digital experiences that help businesses grow online.",
+  keywords: [
+    "UI/UX design services",
+    "website development",
+    "branding agency",
+    "animation services",
+    "graphics design",
+    "video editing services",
+    "creative digital agency",
+    "web design company",
+    "brand identity design"
+  ],
   // -----------------------------------------
   // ✅ Canonical URL (IMPORTANT FOR SEO)
   // -----------------------------------------
@@ -80,7 +90,7 @@ export const metadata: Metadata = {
     siteName: "Sammobadi",
     type: "website",
     images: [
-      { url: "/og-image-light.png", width: 1200, height: 630 },
+      { url: "/og-image.png", width: 1200, height: 630 },
     ],
   },
 
@@ -91,7 +101,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Sammobadi",
     description: "Crafting digital experiences that move people.",
-    images: ["/og-image-light.png"],
+    images: ["/og-image.png"],
   },
 
   // -----------------------------------------
@@ -107,6 +117,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
+          {/* Google Tag Manager */}
+  <Script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-NCDN851NKM"
+  />
+  <Script id="google-analytics">
+    {`
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-NCDN851NKM');
+    `}
+  </Script>
         {/* Ionicons */}
         <Script
           type="module"

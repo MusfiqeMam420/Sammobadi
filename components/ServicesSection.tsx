@@ -126,10 +126,10 @@ export default function ServicesSection() {
 </div>
 
 
-              <h3 className="text-xl font-semibold mb-2 group-hover:text-[#2D6BDF] transition font-poppins">
+              <h3 className="text-md md:text-xl font-semibold mb-2 group-hover:text-[#2D6BDF] transition font-poppins">
                 {service.title}
               </h3>
-              <p className="text-gray-600 text-sm md:text-sm font-poppins w-50">
+              <p className="text-gray-600 text-xs md:text-sm font-poppins w-30 md:w-50">
                 {service.desc}
               </p>
             </motion.div>

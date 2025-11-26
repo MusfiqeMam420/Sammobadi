@@ -24,7 +24,7 @@ export default function Footer() {
   {/* Logo + Title */}
   <div className="flex items-center gap-2">
     <img src="/logo/sammobadi.svg" className="w-5 h-5" alt="logo" />
-    <span className="font-semibold text-zinc-800 text-lg">Sammobadi</span>
+    <span className=" text-zinc-800 text-lg font-host host-semibold">Sammobadi</span>
   </div>
 
   {/* Paragraph */}
@@ -110,7 +110,7 @@ export default function Footer() {
       Office
     </p>
 
-    <p className="text-sm text-zinc-600  leading-relaxed font-poppins">
+    <p className="text-sm text-zinc-600font-medium opacity-70 hover:opacity-100 transition-opacity font-poppins cursor-pointer">
       Alal Market , Gafargaon, <br />
       Mymensingh, Bangladesh.
     </p>
