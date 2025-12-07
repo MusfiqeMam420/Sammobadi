@@ -1,12 +1,11 @@
 import nodemailer from "nodemailer";
-import path from "path";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
 
     // -------------------------------
-    // 📌 VALIDATION (important)
+    // 📌 VALIDATION
     // -------------------------------
     if (!body.firstName || !body.email || !body.message) {
       return new Response(
@@ -16,7 +15,7 @@ export async function POST(req: Request) {
     }
 
     // -------------------------------
-    // 📌 ADMIN EMAIL (you)
+    // 📌 ADMIN EMAIL TEMPLATE
     // -------------------------------
     const adminHtml = `
       <div style="font-family:Arial, sans-serif;">
@@ -33,19 +32,17 @@ export async function POST(req: Request) {
     `;
 
     // -------------------------------
-    // 📌 USER AUTO-REPLY EMAIL
+    // 📌 USER AUTO-REPLY TEMPLATE
     // -------------------------------
-const userHtml = `
+    const userHtml = `
 <div style="margin:0;padding:0;background:#ffffff;
 font-family:'Poppins', sans-serif;">
 
-  <!-- Load Poppins (works for Gmail, Outlook, Apple Mail) -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <div style="max-width:620px;margin:auto;padding:40px 30px 20px 30px;
   font-family:'Poppins', sans-serif;">
 
-    <!-- Top Logo -->
     <div style="text-align:center;margin-bottom:30px;">
     <a href="https://sammobadi.com/">
       <img 
@@ -56,13 +53,11 @@ font-family:'Poppins', sans-serif;">
       </a>
     </div>
 
-    <!-- Greeting -->
     <h2 style="color:#2D6BDF;font-size:22px;margin:0 0 14px;font-weight:600;
     font-family:'Poppins', sans-serif;">
       Thank you for getting in touch, ${body.firstName}!
     </h2>
 
-    <!-- Message -->
     <p style="font-size:15px;color:#333;line-height:1.7;margin-bottom:16px;
     font-family:'Poppins', sans-serif;">
       We truly appreciate you reaching out to <strong>Sammobadi</strong>.
@@ -70,7 +65,6 @@ font-family:'Poppins', sans-serif;">
       You can expect a personal response from us within the next <strong>24 hours</strong>.
     </p>
 
-    <!-- Project Summary -->
     <h3 style="font-size:16px;color:#000;margin:28px 0 10px;font-weight:600;
     font-family:'Poppins', sans-serif;">
       Project Summary
@@ -94,62 +88,55 @@ font-family:'Poppins', sans-serif;">
       </p>
     </div>
 
-    <!-- Closing -->
     <p style="margin-top:30px;font-size:15px;color:#444;line-height:1.7;
     font-family:'Poppins',Arial,sans-serif;">
       Our mission is to bring clarity, creativity, and world-class design to every project.
       We're excited to explore how we can collaborate and bring your vision to life.
     </p>
 
-    <!-- Signature -->
     <p style="margin-top:25px;font-size:14px;color:#444;
     font-family:'Poppins',Arial,sans-serif;">
       Warm regards,<br>
       <strong>The Sammobadi Team</strong>
     </p>
 
-    <!-- Divider -->
     <div style="margin:35px 0;border-top:1px solid #e5e5e5;"></div>
 
-    <!-- Footer -->
     <div style="display:flex;align-items:center;justify-content:space-between;">
-
-      <!-- Footer Logo -->
       <a href="https://sammobadi.com/">
       <img 
         src="https://cdn.jsdelivr.net/gh/MusfiqeMam420/files@main/footer-logo.png"
         alt="Sammobadi Footer Logo"
         style="width:150px;height:auto;"
       />
-
       </a>
     </div>
 
-    <!-- Anti-Clipping Hack -->
     <div style="display:none !important;">anti-clip-${Date.now()}</div>
 
   </div>
 </div>
 `;
 
-
-
     // -------------------------------
-    // 📌 TRANSPORTER (Gmail SMTP)
+    // 📌 GMAIL SMTP — CORRECT CONFIG FOR PORT 587
     // -------------------------------
-    const transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: Number(process.env.EMAIL_PORT),
-      secure: true,
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-
-
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,        // <-- MUST be false for 587
+  requireTLS: true,     // <-- FORCE starttls
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS, // Gmail App Password
+  },
+  tls: {
+    minVersion: "TLSv1.2",
+    rejectUnauthorized: false
+  }
+});
     // -------------------------------
-    // 📌 SEND ADMIN EMAIL
+    // 📌 SEND TO ADMIN
     // -------------------------------
     await transporter.sendMail({
       from: `"Sammobadi" <${process.env.EMAIL_USER}>`,
@@ -162,19 +149,19 @@ font-family:'Poppins', sans-serif;">
     // 📌 SEND AUTO-REPLY TO USER
     // -------------------------------
     await transporter.sendMail({
-  from: `"Sammobadi" <${process.env.EMAIL_USER}>`,
-  to: body.email,
-  subject: "We received your message ✔️",
-  html: userHtml
-});
-
+      from: `"Sammobadi" <${process.env.EMAIL_USER}>`,
+      to: body.email,
+      subject: "We received your message !",
+      html: userHtml,
+    });
 
     return new Response(JSON.stringify({ success: true }), { status: 200 });
 
   } catch (err) {
     console.error("❌ Email send error:", err);
-    return new Response(JSON.stringify({ success: false, error: String(err) }), {
-      status: 500,
-    });
+    return new Response(
+      JSON.stringify({ success: false, error: String(err) }),
+      { status: 500 }
+    );
   }
 }

@@ -90,7 +90,7 @@ export const metadata: Metadata = {
     siteName: "Sammobadi",
     type: "website",
     images: [
-      { url: "/og-image.png", width: 1200, height: 630 },
+      { url: "https://sammobadi.com/og-image.png", width: 1200, height: 630 },
     ],
   },
 
@@ -101,7 +101,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Sammobadi",
     description: "Crafting digital experiences that move people.",
-    images: ["/og-image.png"],
+    images: ["https://sammobadi.com/og-image.png"],
   },
 
   // -----------------------------------------
