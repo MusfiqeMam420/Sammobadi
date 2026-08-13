@@ -145,7 +145,7 @@ export default function Footer() {
       href="mailto:support@sammobadi.com"
       className="text-sm text-zinc-600  opacity-70 hover:opacity-100 transition-opacity font-poppins"
     >
-      Support@sammobadi.com
+      support@sammobadi.com
     </a>
   </div>
             </div>

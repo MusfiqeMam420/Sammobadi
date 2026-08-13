@@ -11,12 +11,12 @@ export const projects = [
     gradient: "linear-gradient(to bottom, #FFE8E8, #FEF2F2, white)",
     logo: "/projects/ban/logo.svg",
     image: "/projects/ban/bg.svg",
-    link: "https://bangalicon.sammobadi.com/",
+    link: "https://bangalicon.com/",
     transparentGradient: false,
     bgCover: false,
 
     tags: [
-      { label: "Website", url: "https://bangalicon.sammobadi.com/" },
+      { label: "Website", url: "https://bangalicon.com/" },
       { label: "Figma Plugin", url: "https://www.figma.com/community/plugin/1509149406843135161/bangalicon" },
       // { label: "CDN", url: "https://cdn.bangalicon.com" },
     ],
@@ -66,13 +66,12 @@ export const projects = [
     gradient: "linear-gradient(to bottom, #E8ECFF, #EEF2FF, white)",
     logo: "/projects/rs/logo.svg",
     image: "/projects/rs/bg.png",
-    link: "https://respieck.com",
-    comingSoon: true,
+    link: "https://chromewebstore.google.com/detail/respieck-%E2%80%93-responsive-tes/ojhapjbbfjbdhdejhoifjgibefedcdjj",
     bgCover: false,
 
     tags: [
-      { label: "Chrome Extension", url: "https://chromewebstore.google.com/detail/xxxxx" },
-      { label: "Mozilla Extension", url: "https://addons.mozilla.org/en-US/firefox/addon/xxxxx" },
+      { label: "Chrome Extension", url: "https://chromewebstore.google.com/detail/respieck-%E2%80%93-responsive-tes/ojhapjbbfjbdhdejhoifjgibefedcdjj" },
+      { label: "Mozilla Extension", url: "https://addons.mozilla.org/en-US/firefox/addon/respieck/" },
     ],
   },
 ];
