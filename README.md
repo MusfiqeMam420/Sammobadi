@@ -9,10 +9,10 @@ The repository includes a PM2 configuration and a GitHub Actions workflow. The w
 On an Ubuntu VPS, install Node.js 20+, Git, and PM2, then run:
 
 ```bash
-sudo mkdir -p /var/www/sammobadi
-sudo chown -R "$USER":"$USER" /var/www/sammobadi
-git clone https://github.com/MusfiqeMam420/Sammobadi.git /var/www/sammobadi
-cd /var/www/sammobadi
+sudo mkdir -p /var/www/Sammobadi
+sudo chown -R "$USER":"$USER" /var/www/Sammobadi
+git clone https://github.com/MusfiqeMam420/Sammobadi.git /var/www/Sammobadi
+cd /var/www/Sammobadi
 npm ci
 cp .env.example .env.local
 nano .env.local
@@ -23,7 +23,7 @@ pm2 save
 pm2 startup
 ```
 
-Set the email values in `/var/www/sammobadi/.env.local`. Never commit that file.
+Set the email values in `/var/www/Sammobadi/.env.local`. Never commit that file.
 
 ### GitHub Actions secrets
 

@@ -23,7 +23,7 @@ jobs:
           script_stop: true
           script: |
             set -eu
-            cd /var/www/sammobadi
+            cd /var/www/Sammobadi
             git fetch origin main
             git reset --hard origin/main
             npm ci
