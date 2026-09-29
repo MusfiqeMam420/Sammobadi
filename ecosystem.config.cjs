@@ -3,7 +3,7 @@ module.exports = {
     {
       name: "sammobadi",
       script: "node_modules/next/dist/bin/next",
-      args: "start -p 3010",
+      args: "start -p 3011",
       cwd: "/var/www/Sammobadi",
       env: {
         NODE_ENV: "production",
