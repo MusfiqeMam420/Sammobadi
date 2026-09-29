@@ -1,13 +1,14 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { Close } from "@bangalicon/react";
+import type { Project } from "./ProjectCard";
 
 export default function ProjectModal({
   activeProject,
   onClose,
 }: {
-  activeProject: any;
+  activeProject: (Project & { video?: string; desc?: string }) | null;
   onClose: () => void;
 }) {
   return (
@@ -46,12 +47,12 @@ export default function ProjectModal({
 
                 {/* Tags */}
                 <div className="flex gap-2 mt-3 flex-wrap">
-                  {activeProject.tags?.map((tag: string, index: number) => (
+                  {activeProject.tags?.map((tag, index) => (
                     <span
                       key={index}
                       className="px-3 py-1 text-xs bg-gray-100 rounded-full text-gray-700 border"
                     >
-                      {tag}
+                      {tag.label}
                     </span>
                   ))}
                 </div>
@@ -62,7 +63,7 @@ export default function ProjectModal({
                 onClick={onClose}
                 className="p-2 rounded-full hover:bg-gray-100 transition"
               >
-                <X className="w-5 h-5 text-gray-600" />
+                <Close fill="currentColor" className="w-5 h-5 text-gray-600" />
               </button>
             </div>
 
@@ -76,6 +77,7 @@ export default function ProjectModal({
                   loop
                   muted
                   playsInline
+                  preload="none"
                   className="w-full rounded-xl shadow"
                 />
               )}

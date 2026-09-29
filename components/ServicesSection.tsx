@@ -1,10 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import ServiceModal from "./ServiceModal";
 
-export const services = [
+export interface Service {
+  id: number;
+  img: string;
+  title: string;
+  desc: string;
+  details: string[];
+}
+
+export const services: Service[] = [
   {
     id: 1,
     img: "/service-animation/service-1.gif",
@@ -80,7 +89,7 @@ export const services = [
 ];
 
 export default function ServicesSection() {
-  const [activeService, setActiveService] = useState<any>(null);
+  const [activeService, setActiveService] = useState<Service | null>(null);
 
   return (
     <section className="relative py- bg-white text-gray-900 overflow-hidden" id="services">
@@ -113,9 +122,13 @@ export default function ServicesSection() {
               className="cursor-pointer flex flex-col items-center text-center p-6 group  transition"
             >
            <div className="relative w-34 h-34 md:w-38 md:h-38 flex items-center justify-center overflow-hidden ">
-  <img
+  <Image
     src={service.img.replace(".mov", ".gif")}
     alt={service.title}
+    width={152}
+    height={152}
+    unoptimized
+    loading="lazy"
     className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 ease-out"
     style={{
       WebkitBackfaceVisibility: "hidden",
@@ -137,11 +150,10 @@ export default function ServicesSection() {
         </div>
       </div>
 
-      {/* Import the Popup */}
-      {/* <ServiceModal
+      <ServiceModal
         activeService={activeService}
         onClose={() => setActiveService(null)}
-      /> */}
+      />
     </section>
   );
 }

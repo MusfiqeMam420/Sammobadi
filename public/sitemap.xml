@@ -8,6 +8,34 @@
     <priority>1.0</priority>
   </url>
 
+  <!-- Services -->
+  <url>
+    <loc>https://sammobadi.com/services</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Projects -->
+  <url>
+    <loc>https://sammobadi.com/projects</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- About -->
+  <url>
+    <loc>https://sammobadi.com/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Workflow -->
+  <url>
+    <loc>https://sammobadi.com/workflow</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- Privacy Policy -->
   <url>
     <loc>https://sammobadi.com/privacy</loc>

@@ -1,7 +1,11 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { createContext, useContext, useState } from "react";
-import ContactModal from "@/components/ContactModal";
+
+const ContactModal = dynamic(() => import("@/components/ContactModal"), {
+  ssr: false,
+});
 
 interface ContactModalContextValue {
   openContact: () => void;

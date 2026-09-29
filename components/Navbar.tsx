@@ -3,17 +3,18 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X } from "lucide-react";
+import { Close } from "@bangalicon/react";
 import { motion, AnimatePresence } from "framer-motion";
 import UniversalButton from "@/components/UniversalButton";
 import { useContactModal } from "@/app/context/ContactModalContext";
+import { goToSectionRoute } from "@/components/sectionNavigation";
 
 
 const links = [
-  { name: "Services", href: "#services" },
-  { name: "Projects", href: "#projects" },
-  { name: "About", href: "#about" },
-  { name: "Workflow", href: "#workflow" },
+  { name: "Services", href: "/services" },
+  { name: "Projects", href: "/projects" },
+  { name: "About", href: "/about" },
+  { name: "Workflow", href: "/workflow" },
 ];
 
 export default function Navbar() {
@@ -50,11 +51,14 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-10 font-poppins">
+        <div className="hidden text-sm md:flex items-center gap-6 font-poppins poppins-medium">
           {links.map((link) => (
             <Link
               key={link.name}
               href={link.href}
+              onClick={(e) => {
+                if (goToSectionRoute(link.href)) e.preventDefault();
+              }}
               className="text-gray-800 opacity-70 hover:opacity-100 transition-opacity"
             >
               {link.name}
@@ -71,10 +75,9 @@ export default function Navbar() {
             onClick={() => setMenuOpen(true)}
             className="md:hidden text-gray-900 z-[60] text-3xl"
           >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-8">
-  <path fillRule="evenodd" d="M3 9a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 9Zm0 6.75a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z" clipRule="evenodd" />
-</svg>
-
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-8">
+              <path fillRule="evenodd" d="M3 9a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 9Zm0 6.75a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z" clipRule="evenodd" />
+            </svg>
           </button>
         )}
       </div>
@@ -102,7 +105,7 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
               className="absolute top-6 right-6 text-gray-900"
             >
-              <X size={30} />
+              <Close size={30} fill="currentColor" />
             </button>
 
             {/* Menu Items */}
@@ -125,8 +128,11 @@ export default function Navbar() {
                 >
                   <Link
                     href={link.href}
-                    onClick={() => setMenuOpen(false)}
-                    className="text-3xl font-semibold text-gray-900 hover:text-blue-600 transition-colors"
+                    onClick={(e) => {
+                      if (goToSectionRoute(link.href)) e.preventDefault();
+                      setMenuOpen(false);
+                    }}
+                    className="text-3xl font-semibold text-gray-900 hover:text-blue-600 font-host transition-colors"
                   >
                     {link.name}
                   </Link>

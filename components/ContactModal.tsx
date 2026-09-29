@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { CloseCircleSolid } from "@bangalicon/react";
 import UniversalButton from "@/components/UniversalButton";
+import LazyVideo from "@/components/LazyVideo";
 
 interface ContactModalProps {
   onClose: () => void;
@@ -136,10 +138,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             onClick={triggerClose}
             className="absolute right-4 top-4 text-zinc-600 hover:text-black text-3xl transition cursor-pointer"
           >
-         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-8">
-  <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clipRule="evenodd" />
-</svg>
-
+            <CloseCircleSolid size={32} fill="currentColor" />
           </button>
 
           <h2 className="text-2xl md:text-3xl font-bold mb-4 font-host">
@@ -274,7 +273,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             <UniversalButton
               text={sent ? "Message Sent!" : "Send Message"}
               href="#"
-              onClick={(e: any) => {
+              onClick={(e) => {
                 e.preventDefault();
                 document.getElementById("contact-form")?.dispatchEvent(
                   new Event("submit", { cancelable: true, bubbles: true })
@@ -288,12 +287,8 @@ const handleSubmit = async (e: React.FormEvent) => {
           </div>
 
           {/* Grass */}
-          <video
+          <LazyVideo
   src="/contact/grass.webm"  // <-- your custom animation video
-  autoPlay
-  loop
-  muted
-  playsInline
   className="
     absolute bottom-0 right-0 
     w-32 

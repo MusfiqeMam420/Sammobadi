@@ -1,19 +1,55 @@
 {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Sammobadi",
-  "url": "https://example.com",
-  "logo": "/favicon_192.png",
-  "sameAs": [
-    "https://twitter.com/your_twitter",
-    "https://www.linkedin.com/in/your_profile"
-  ],
-  "contactPoint": [
+  "@graph": [
     {
-      "@type": "ContactPoint",
-      "telephone": "+880000000000",
-      "contactType": "customer service",
-      "areaServed": "BD"
+      "@type": "Organization",
+      "@id": "https://sammobadi.com/#organization",
+      "name": "Sammobadi",
+      "url": "https://sammobadi.com/",
+      "logo": "https://sammobadi.com/favicon/favicon_192.png",
+      "image": "https://sammobadi.com/og-image.png",
+      "sameAs": [
+        "https://x.com/sammobadi",
+        "https://www.facebook.com/Sammobadiit/",
+        "https://www.instagram.com/sammo_badi/"
+      ],
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+8801622244057",
+          "contactType": "customer support",
+          "areaServed": "BD"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://sammobadi.com/#website",
+      "name": "Sammobadi",
+      "url": "https://sammobadi.com/",
+      "publisher": {
+        "@id": "https://sammobadi.com/#organization"
+      }
+    },
+    {
+      "@type": "SiteNavigationElement",
+      "@id": "https://sammobadi.com/#site-navigation",
+      "name": [
+        "Services",
+        "Projects",
+        "About",
+        "Workflow",
+        "Privacy Policy",
+        "Terms & Conditions"
+      ],
+      "url": [
+        "https://sammobadi.com/services",
+        "https://sammobadi.com/projects",
+        "https://sammobadi.com/about",
+        "https://sammobadi.com/workflow",
+        "https://sammobadi.com/privacy",
+        "https://sammobadi.com/terms"
+      ]
     }
   ]
 }

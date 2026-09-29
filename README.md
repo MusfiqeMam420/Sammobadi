@@ -1,5 +1,34 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## VPS deployment with GitHub
+
+The repository includes a PM2 configuration and a GitHub Actions workflow. The workflow deploys every push to `main`.
+
+### One-time VPS setup
+
+On an Ubuntu VPS, install Node.js 20+, Git, and PM2, then run:
+
+```bash
+sudo mkdir -p /var/www/sammobadi
+sudo chown -R "$USER":"$USER" /var/www/sammobadi
+git clone https://github.com/MusfiqeMam420/Sammobadi.git /var/www/sammobadi
+cd /var/www/sammobadi
+npm ci
+cp .env.example .env.local
+nano .env.local
+npm run build
+npm install --global pm2
+pm2 start ecosystem.config.cjs
+pm2 save
+pm2 startup
+```
+
+Set the email values in `/var/www/sammobadi/.env.local`. Never commit that file.
+
+### GitHub Actions secrets
+
+In the repository settings, add `VPS_HOST`, `VPS_USER`, `VPS_SSH_KEY`, and optionally `VPS_PORT`. The SSH key must be authorized in the VPS user's `~/.ssh/authorized_keys` file. After that, every push to `main` runs lint, builds the app, and reloads PM2.
+
 ## Getting Started
 
 First, run the development server:

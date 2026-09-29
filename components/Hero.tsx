@@ -1,25 +1,33 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import UniversalButton from "@/components/UniversalButton";
 
-import { useContactModal } from "@/app/context/ContactModalContext";
-
 
 export default function HeroSection() {
   const [isMobile, setIsMobile] = useState(false);
-
-       const { openContact } = useContactModal();
+  const [isIOS, setIsIOS] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    handleResize();
+    const syncDevice = () => {
+      setIsMobile(window.innerWidth < 768);
+      setIsIOS(
+        /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+          (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+      );
+    };
+
+    const frame = requestAnimationFrame(syncDevice);
+    const handleResize = () => syncDevice();
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
-  const headline = "We Are Sammobadi";
   const tagline = (
     <>
       Designers <span className="text-zinc-400">·</span> Developers{" "}
@@ -30,23 +38,16 @@ export default function HeroSection() {
   const subtext =
     "We craft digital experiences that resonate, combining thoughtful design, purposeful storytelling, and modern development to create meaningful interactions that connect ideas with emotion.";
 
-  const wordAnimation = {
-    hidden: { opacity: 0, y: 30 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: i * 0.08, duration: 0.6, ease: "easeOut" },
-    }),
-  };
-
   return (
     <section className="relative flex items-center justify-center min-h-screen bg-white overflow-hidden">
-<img
+<Image
   src="/hero/cloud_bg.png"
   alt="Cloud Background"
+  fill
+  priority
+  sizes="100vw"
   className="
     absolute inset-0 
-    w-full h-full 
     object-cover 
     object-top 
     opacity-90 
@@ -56,19 +57,27 @@ export default function HeroSection() {
 
 
   {/* 🎏 Kite illustration */}
-<video
-  className="absolute top-[10%] left-[1%] rotate-30 sm:rotate-10 md:rotate-5 md:top-[6%] md:left-[0%] lg:rotate-0 lg:left-[20%] w-[160px] sm:w-[200px] md:w-[260px] lg:w-[300px] object-contain pointer-events-none z-10"
-  autoPlay
-  loop
-  muted
-  playsInline
-  preload="none"          // ← Faster initial load
-  poster="/hero/kite.png"          // ← Browsers can lazy load video
->
-  <source src="/hero/kite-480.webm" type="video/webm" media="(max-width: 600px)" />
-  <source src="/hero/kite-720.webm" type="video/webm" media="(max-width: 1200px)" />
-  <source src="/hero/kite.webm" type="video/webm" />
-</video>
+{isIOS ? (
+  <Image
+    src="/hero/kite.png"
+    alt="Kite"
+    width={300}
+    height={300}
+    className="absolute top-[10%] left-[1%] rotate-30 sm:rotate-10 md:rotate-5 md:top-[6%] md:left-[0%] lg:rotate-0 lg:left-[20%] w-[160px] sm:w-[200px] md:w-[260px] lg:w-[300px] object-contain pointer-events-none z-10"
+  />
+) : (
+  <video
+    className="absolute top-[10%] left-[1%] rotate-30 sm:rotate-10 md:rotate-5 md:top-[6%] md:left-[0%] lg:rotate-0 lg:left-[20%] w-[160px] sm:w-[200px] md:w-[260px] lg:w-[300px] object-contain pointer-events-none z-10"
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="none"
+    poster="/hero/kite.png"
+  >
+    <source src="/hero/kite.webm" type="video/webm" />
+  </video>
+)}
 
 
       {/* 👦 Boy illustration */}
@@ -79,7 +88,7 @@ export default function HeroSection() {
         loop
         muted
         playsInline
-        preload="auto"
+        preload="none"
         poster={isMobile ? "/hero/boy-2.png" : "/hero/boy.png"}
       />
 
@@ -165,7 +174,7 @@ export default function HeroSection() {
           className="mt-8"
         >
           <div className="text-center">
-           <UniversalButton text="Explore" href="#services" />
+           <UniversalButton text="Explore" href="/services" />
           </div>
         </motion.div>
       </div>

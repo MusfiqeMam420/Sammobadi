@@ -1,12 +1,19 @@
 "use client";
 
 import { motion } from "framer-motion";
+import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import PrivacyHero from "@/components/PrivacyHero";
 import Footer from "@/components/footer";
 
 export default function PrivacyPage() {
   return (
     <main >
+  <BreadcrumbJsonLd
+    items={[
+      { name: "Home", url: "https://sammobadi.com/" },
+      { name: "Privacy Policy", url: "https://sammobadi.com/privacy" },
+    ]}
+  />
   <PrivacyHero title="Privacy & Policy" />
  <div className="px-6 py-20 max-w-3xl mx-auto font-poppins text-[15px] text-zinc-700">
           

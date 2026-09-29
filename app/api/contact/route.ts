@@ -1,4 +1,32 @@
 import nodemailer from "nodemailer";
+import { after } from "next/server";
+
+interface ContactRequest {
+  firstName: string;
+  lastName?: string;
+  email: string;
+  message: string;
+  budget: string;
+  services: string[];
+}
+
+function isContactRequest(body: unknown): body is ContactRequest {
+  if (!body || typeof body !== "object") return false;
+
+  const data = body as Partial<ContactRequest>;
+  return (
+    typeof data.firstName === "string" &&
+    typeof data.email === "string" &&
+    typeof data.message === "string" &&
+    typeof data.budget === "string" &&
+    Array.isArray(data.services) &&
+    data.firstName.trim() !== "" &&
+    data.email.trim() !== "" &&
+    data.message.trim() !== "" &&
+    data.budget.trim() !== "" &&
+    data.services.length > 0
+  );
+}
 
 export async function POST(req: Request) {
   try {
@@ -7,7 +35,7 @@ export async function POST(req: Request) {
     // -------------------------------
     // 📌 VALIDATION
     // -------------------------------
-    if (!body.firstName || !body.email || !body.message) {
+    if (!isContactRequest(body)) {
       return new Response(
         JSON.stringify({ success: false, error: "Missing required fields" }),
         { status: 400 }
@@ -20,7 +48,7 @@ export async function POST(req: Request) {
     const adminHtml = `
       <div style="font-family:Arial, sans-serif;">
         <h2>📩 New Project Inquiry</h2>
-        <p>You have a new project message from <b>${body.firstName} ${body.lastName}</b></p>
+        <p>You have a new project message from <b>${body.firstName} ${body.lastName ?? ""}</b></p>
 
         <p><b>Email:</b> ${body.email}</p>
         <p><b>Budget:</b> ${body.budget}</p>
@@ -135,27 +163,28 @@ const transporter = nodemailer.createTransport({
     rejectUnauthorized: false
   }
 });
-    // -------------------------------
-    // 📌 SEND TO ADMIN
-    // -------------------------------
-    await transporter.sendMail({
-      from: `"Sammobadi" <${process.env.EMAIL_USER}>`,
-      to: process.env.TO_EMAIL,
-      subject: `New Project Inquiry from ${body.firstName}`,
-      html: adminHtml,
+    after(async () => {
+      try {
+        await Promise.all([
+          transporter.sendMail({
+            from: `"Sammobadi" <${process.env.EMAIL_USER}>`,
+            to: process.env.TO_EMAIL,
+            subject: `New Project Inquiry from ${body.firstName}`,
+            html: adminHtml,
+          }),
+          transporter.sendMail({
+            from: `"Sammobadi" <${process.env.EMAIL_USER}>`,
+            to: body.email,
+            subject: "We received your message!",
+            html: userHtml,
+          }),
+        ]);
+      } catch (err) {
+        console.error("❌ Background email send error:", err);
+      }
     });
 
-    // -------------------------------
-    // 📌 SEND AUTO-REPLY TO USER
-    // -------------------------------
-    await transporter.sendMail({
-      from: `"Sammobadi" <${process.env.EMAIL_USER}>`,
-      to: body.email,
-      subject: "We received your message !",
-      html: userHtml,
-    });
-
-    return new Response(JSON.stringify({ success: true }), { status: 200 });
+    return new Response(JSON.stringify({ success: true, queued: true }), { status: 202 });
 
   } catch (err) {
     console.error("❌ Email send error:", err);

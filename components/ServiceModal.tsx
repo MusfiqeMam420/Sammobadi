@@ -1,14 +1,20 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import React, { useEffect } from "react";
+import { Close } from "@bangalicon/react";
+import { useContactModal } from "@/app/context/ContactModalContext";
+import type { Service } from "./ServicesSection";
 
 interface ServiceModalProps {
-  activeService: any;
+  activeService: Service | null;
   onClose: () => void;
 }
 
 const ServiceModal: React.FC<ServiceModalProps> = ({ activeService, onClose }) => {
+  const { openContact } = useContactModal();
+
   useEffect(() => {
     if (activeService) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "auto";
@@ -38,7 +44,7 @@ const ServiceModal: React.FC<ServiceModalProps> = ({ activeService, onClose }) =
                        transition rounded-full w-10 h-10 flex items-center 
                        justify-center font-bold text-xl"
           >
-            ✕
+            <Close size={22} fill="currentColor" />
           </button>
 
           <motion.div
@@ -52,12 +58,13 @@ const ServiceModal: React.FC<ServiceModalProps> = ({ activeService, onClose }) =
           >
             {/* Sticky Video Header */}
             <div className="relative h-[60vh] sm:h-[70vh] overflow-hidden">
-              <video
+              <Image
                 src={activeService.img}
-                autoPlay
-                loop
-                muted
-                playsInline
+                alt={activeService.title}
+                fill
+                sizes="90vw"
+                unoptimized
+                loading="lazy"
                 className="w-full h-full object-contain bg-gray-50 sticky top-0"
               />
             </div>
@@ -123,13 +130,17 @@ const ServiceModal: React.FC<ServiceModalProps> = ({ activeService, onClose }) =
                     and make something extraordinary.
                   </p>
                 </div>
-                <a
-                  href="/contact"
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    openContact();
+                  }}
                   className="inline-block bg-blue-600 text-white px-10 py-4 
                              rounded-full font-semibold hover:bg-blue-500 transition"
                 >
                   Start a Project
-                </a>
+                </button>
               </div>
             </div>
           </motion.div>

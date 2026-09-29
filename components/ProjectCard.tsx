@@ -1,9 +1,28 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 
-export default function ProjectCard({ project, tall = false }: { project: any; tall?: boolean }) {
-  const isDisabled = !!project.comingSoon;
+export interface ProjectTag {
+  label: string;
+  url: string;
+}
+
+export interface Project {
+  id: number;
+  title: string;
+  subtitle: string;
+  gradient: string;
+  logo?: string;
+  image: string;
+  link: string;
+  comingSoon?: boolean;
+  transparentGradient?: boolean;
+  bgCover?: boolean;
+  tags?: ProjectTag[];
+}
+
+export default function ProjectCard({ project, tall = false }: { project: Project; tall?: boolean }) {
 
   return  (
     <motion.div
@@ -60,13 +79,21 @@ export default function ProjectCard({ project, tall = false }: { project: any; t
           </div>
 
           {project.logo && (
-            <img src={project.logo} alt="" className="w-7 h-7 opacity-90" />
+            <Image
+              src={project.logo}
+              alt=""
+              width={28}
+              height={28}
+              unoptimized
+              loading="lazy"
+              className="w-7 h-7 opacity-90"
+            />
           )}
         </div>
 
         {/* TAGS */}
         <div className="flex flex-wrap gap-2 mt-4">
-          {project.tags?.map((tag: any, i: number) => {
+          {project.tags?.map((tag, i) => {
             const disabled = project.comingSoon;
 
             return (
@@ -101,9 +128,13 @@ export default function ProjectCard({ project, tall = false }: { project: any; t
 {project.bgCover ? (
   // FULL COVER MODE
   <div className="absolute inset-0 z-0">
-    <img
+    <Image
       src={project.image}
       alt={project.title}
+      fill
+      sizes="(min-width: 768px) 50vw, 100vw"
+      unoptimized={project.image.endsWith(".svg")}
+      loading="lazy"
       className="w-full h-full object-cover"
     />
   </div>
@@ -114,9 +145,13 @@ export default function ProjectCard({ project, tall = false }: { project: any; t
       tall ? "h-[300px]" : "h-[280px]"
     }`}
   >
-    <img
+    <Image
       src={project.image}
       alt={project.title}
+      fill
+      sizes="(min-width: 768px) 50vw, 100vw"
+      unoptimized={project.image.endsWith(".svg")}
+      loading="lazy"
       className="absolute inset-0 w-full h-full object-cover"
     />
   </div>

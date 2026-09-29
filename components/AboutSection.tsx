@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import LazyVideo from "@/components/LazyVideo";
 
 
 /* -------------------------------
@@ -179,20 +180,11 @@ export default function AboutSection() {
   className="flex-1 w-full flex justify-center"
 >
   <div className="relative w-full max-w-sm sm:max-w-md overflow-hidden">
-    <video
+    <LazyVideo
       className="w-full h-full object-cover"
-      autoPlay
-      loop
-      muted
-      playsInline
-      preload="none"          // 🚀 prevents heavy load on page start
+      src="/about/about.webm"
       poster="/about/about.png"  // ⭐ add your poster image
-    >
-      {/* 👇 Responsive sources for faster loading */}
-      <source src="/about/about-480.webm" type="video/webm" media="(max-width: 600px)" />
-      <source src="/about/about-720.webm" type="video/webm" media="(max-width: 1200px)" />
-      <source src="/about/about.webm" type="video/webm" />
-    </video>
+    />
   </div>
 </motion.div>
 

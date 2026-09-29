@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 
@@ -70,9 +71,13 @@ export default function ProcessSection() {
             className="flex flex-col items-center px-4"
           >
             {/* ICON */}
-            <img
+            <Image
               src={step.img}
               alt={step.title}
+              width={100}
+              height={100}
+              unoptimized
+              loading="lazy"
               className="w-25 h-25 object-contain mb-4"
             />
 

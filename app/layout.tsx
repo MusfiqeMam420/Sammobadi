@@ -1,23 +1,60 @@
 import "./globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { ContactModalProvider } from "@/app/context/ContactModalContext";
 
 const schemaData = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Sammobadi",
-  "url": "https://sammobadi.com/",
-  "logo": "https://sammobadi.com/favicon/favicon_192.png",
-  "sameAs": [
-    "https://x.com/sammobadi",
-    // "https://www.linkedin.com/in/YOUR_USERNAME/"
-  ],
-  "contactPoint": [
+  "@graph": [
     {
-      "@type": "ContactPoint",
-      "telephone": "+8801622244057",
-      "contactType": "customer support"
+      "@type": "Organization",
+      "@id": "https://sammobadi.com/#organization",
+      "name": "Sammobadi",
+      "url": "https://sammobadi.com/",
+      "logo": "https://sammobadi.com/favicon/favicon_192.png",
+      "image": "https://sammobadi.com/og-image.png",
+      "sameAs": [
+        "https://x.com/sammobadi",
+        "https://www.facebook.com/Sammobadiit/",
+        "https://www.instagram.com/sammo_badi/"
+      ],
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+8801622244057",
+          "contactType": "customer support",
+          "areaServed": "BD"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://sammobadi.com/#website",
+      "name": "Sammobadi",
+      "url": "https://sammobadi.com/",
+      "publisher": {
+        "@id": "https://sammobadi.com/#organization"
+      }
+    },
+    {
+      "@type": "SiteNavigationElement",
+      "@id": "https://sammobadi.com/#site-navigation",
+      "name": [
+        "Services",
+        "Projects",
+        "About",
+        "Workflow",
+        "Privacy Policy",
+        "Terms & Conditions"
+      ],
+      "url": [
+        "https://sammobadi.com/services",
+        "https://sammobadi.com/projects",
+        "https://sammobadi.com/about",
+        "https://sammobadi.com/workflow",
+        "https://sammobadi.com/privacy",
+        "https://sammobadi.com/terms"
+      ]
     }
   ]
 };
@@ -71,16 +108,6 @@ export const metadata: Metadata = {
   },
 
   // -----------------------------------------
-  // Manifest
-  // -----------------------------------------
-  manifest: "/favicon/manifest.json",
-
-  themeColor: [
-    { color: "#ffffff", media: "(prefers-color-scheme: light)" },
-    { color: "#000000", media: "(prefers-color-scheme: dark)" },
-  ],
-
-  // -----------------------------------------
   // OpenGraph SEO
   // -----------------------------------------
   openGraph: {
@@ -104,25 +131,27 @@ export const metadata: Metadata = {
     images: ["https://sammobadi.com/og-image.png"],
   },
 
-  // -----------------------------------------
-  // iOS Web App
-  // -----------------------------------------
-  appleWebApp: {
-    capable: true,
-    title: "Sammobadi",
-  },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { color: "#ffffff", media: "(prefers-color-scheme: light)" },
+    { color: "#000000", media: "(prefers-color-scheme: dark)" },
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
           {/* Google Tag Manager */}
   <Script
-    async
     src="https://www.googletagmanager.com/gtag/js?id=G-NCDN851NKM"
+    strategy="lazyOnload"
   />
-  <Script id="google-analytics">
+  <Script id="google-analytics" strategy="lazyOnload">
     {`
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -130,21 +159,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       gtag('config', 'G-NCDN851NKM');
     `}
   </Script>
-        {/* Ionicons */}
-        <Script
-          type="module"
-          src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-          strategy="afterInteractive"
-        />
-        <Script
-          noModule={true}
-          src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-          strategy="afterInteractive"
-        />
-
-        {/* Dark Mode Manifest */}
-        <link rel="manifest" href="/favicon/manifest-dark.json" media="(prefers-color-scheme: dark)" />
-
         {/* -----------------------------------------
             ✅ JSON-LD Structured Data (SEO BOOST)
            ----------------------------------------- */}

@@ -2,13 +2,14 @@
 
 import { motion } from "framer-motion";
 import UniversalButton from "@/components/UniversalButton";
+import LazyVideo from "@/components/LazyVideo";
 import { useContactModal } from "@/app/context/ContactModalContext";
 
 export default function CTAFooter() {
   const { openContact } = useContactModal();
 
   return (
-    <section className="px-0 py-1 max-w-7xl mx-auto">
+    <section className="px-3 md:px-0 py-1 max-w-7xl mx-auto">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -24,6 +25,7 @@ export default function CTAFooter() {
           items-center md:items-stretch
           justify-between
           w-full
+
         "
       >
 
@@ -68,12 +70,9 @@ export default function CTAFooter() {
                 pointer-events-none
               "
             >
-              <video
+              <LazyVideo
                 src="/CTAFooter/ctafooter.webm"
-                autoPlay
-                loop
-                muted
-                playsInline
+                poster="/CTAFooter/catfooter.png"
                 className="absolute inset-0 w-full h-full object-contain"
               />
             </div>
@@ -112,35 +111,11 @@ export default function CTAFooter() {
         {/* Desktop Illustration */}
 <div className="hidden md:flex w-[40%] justify-end items-end">
   <div className="relative aspect-[19/14] w-[330px] translate-y-[30%] pointer-events-none">
-    <video
+    <LazyVideo
       className="absolute inset-0 w-full h-full object-contain"
-      autoPlay
-      loop
-      muted
-      playsInline
-      preload="none"           // 🚀 major performance improvement 
+      src="/CTAFooter/ctafooter.webm"
       poster="/CTAFooter/catfooter.png"   // ⭐ add poster for instant load
-    >
-      {/* 📱 Mobile */}
-      <source
-        src="/CTAFooter/ctafooter-480.webm"
-        type="video/webm"
-        media="(max-width: 600px)"
-      />
-
-      {/* 💻 Tablet */}
-      <source
-        src="/CTAFooter/ctafooter-720.webm"
-        type="video/webm"
-        media="(max-width: 1200px)"
-      />
-
-      {/* 🖥 Desktop (default) */}
-      <source
-        src="/CTAFooter/ctafooter.webm"
-        type="video/webm"
-      />
-    </video>
+    />
   </div>
 </div>
 

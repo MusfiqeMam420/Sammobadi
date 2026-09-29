@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import ProjectCard from "./ProjectCard";
+import ProjectCard, { Project } from "./ProjectCard";
 
-export const projects = [
+export const projects: Project[] = [
   {
     id: 1,
     title: "Bangalicon",
